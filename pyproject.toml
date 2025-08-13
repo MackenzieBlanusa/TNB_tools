@@ -1,0 +1,49 @@
+[project]
+name = "TNB-tools"
+version = "0.0.1a1"
+description = "A python package containing useful analysis tools for physical oceanographic research in Terra Nova Bay, Antarctica"
+keywords = ["antarctica","analysis","Terra Nova Bay"]
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE.txt"]
+authors = [
+    {name = "Mackenzie Blanusa", email = "mblanusa@ldeo.columbia.edu"}
+]
+maintainers = [
+    {name = "Mackenzie Blanusa", email = "mblanusa@ldeo.columbia.edu"}
+]
+requires-python = ">=3.10"
+
+dependencies = [
+     - numpy
+     - scipy
+     - pandas
+     - xarray
+     - netcdf4
+     - dask
+     - jupyterlab
+     - matplotlib
+     - cartopy
+     - cmocean
+     - proplot
+     - seaborn
+     - seawater
+     - gsw
+     - scikit-learn
+   - pip:
+     - pytest
+]
+
+[project.urls]
+Homepage = "https://github.com/MackenzieBlanusa/TNB_tools"
+
+[project.optional-dependencies]
+docs = [
+   "mkdocs-material",
+]
+
+[build-system]
+build-backend = "setuptools.build_meta"
+requires = [
+    "setuptools",
+]
