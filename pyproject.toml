@@ -15,23 +15,7 @@ maintainers = [
 requires-python = ">=3.10"
 
 dependencies = [
-     - numpy
-     - scipy
-     - pandas
-     - xarray
-     - netcdf4
-     - dask
-     - jupyterlab
-     - matplotlib
-     - cartopy
-     - cmocean
-     - proplot
-     - seaborn
-     - seawater
-     - gsw
-     - scikit-learn
-   - pip:
-     - pytest
+    "numpy",
 ]
 
 [project.urls]
@@ -39,8 +23,13 @@ Homepage = "https://github.com/MackenzieBlanusa/TNB_tools"
 
 [project.optional-dependencies]
 docs = [
-   "mkdocs-material",
+   "mkdocs-material","matplotlib"
 ]
+
+tests = [
+  "pytest"
+]
+
 
 [build-system]
 build-backend = "setuptools.build_meta"
