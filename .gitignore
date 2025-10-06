@@ -7,3 +7,6 @@ dist
 .DS_Store
 
 examples/.ipynb_checkpoints/HSSW_Production_2017-checkpoint.ipynb
+
+
+satellite_data/terra_nova_images
