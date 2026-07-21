@@ -179,7 +179,6 @@ def ellipse_orientation(Suu, Svv, Cuv):
     return np.rad2deg(theta)
 
 
-
 # ------------------------------- CONFIDENCE INTERVALS BASED ON CHI^2 DISTRIBUTION AND DOF --------------------------------------------
 
 def dof_welch(n, nperseg, noverlap=0):
