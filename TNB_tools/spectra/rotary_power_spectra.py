@@ -100,8 +100,8 @@ def rotary_components(Suu, Svv, Cuv):
     Svv = np.asarray(Svv)
     Cuv = np.asarray(Cuv)
 
-    S_ccw = (Suu + Svv + 2 * np.imag(Cuv)) / 4
-    S_cw = (Suu + Svv - 2 * np.imag(Cuv)) / 4
+    S_ccw = (Suu + Svv + 2 * np.imag(Cuv)) / 2
+    S_cw = (Suu + Svv - 2 * np.imag(Cuv)) / 2
 
     return S_ccw, S_cw
 
