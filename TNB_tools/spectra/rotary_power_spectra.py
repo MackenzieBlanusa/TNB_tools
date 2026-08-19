@@ -270,36 +270,58 @@ def chi2_ci_multiplier(dof, ci=95):
     return f_lo, f_hi
 
 
-def add_ci_bracket(ax, f_lo, f_hi, x_frac=0.08, y_frac=0.85,
-                    label='95% CI', color='k'):
-    """
-    Draw a representative CI bracket on a log-log PSD plot, sized
-    from chi2_ci_multiplier() output. Positioned by axes-fraction
-    coordinates (not tied to a specific data point), matching how
-    this is typically shown in spectral literature.
+# def add_ci_bracket(ax, f_lo, f_hi, x_frac=0.08, y_frac=0.85,
+#                     label='95% CI', color='k'):
+#     """
+#     Draw a representative CI bracket on a log-log PSD plot, sized
+#     from chi2_ci_multiplier() output. Positioned by axes-fraction
+#     coordinates (not tied to a specific data point), matching how
+#     this is typically shown in spectral literature.
 
-    Parameters
-    ----------
-    ax : matplotlib Axes
-        Axes to draw on (log-log scale assumed).
-    f_lo, f_hi : float
-        Multiplicative CI factors from chi2_ci_multiplier().
-    x_frac, y_frac : float, optional
-        Position of the bracket, as a fraction (0-1) of the log-scaled
-        axis range. Default places it near the upper-left.
-    label : str, optional
-        Text label next to the bracket.
-    color : str, optional
-        Line/text color.
-    """
+#     Parameters
+#     ----------
+#     ax : matplotlib Axes
+#         Axes to draw on (log-log scale assumed).
+#     f_lo, f_hi : float
+#         Multiplicative CI factors from chi2_ci_multiplier().
+#     x_frac, y_frac : float, optional
+#         Position of the bracket, as a fraction (0-1) of the log-scaled
+#         axis range. Default places it near the upper-left.
+#     label : str, optional
+#         Text label next to the bracket.
+#     color : str, optional
+#         Line/text color.
+#     """
+#     xlim = ax.get_xlim()
+#     ylim = ax.get_ylim()
+#     x_pos = xlim[0] * (xlim[1] / xlim[0]) ** x_frac
+#     y_center = ylim[0] * (ylim[1] / ylim[0]) ** y_frac
+
+#     yerr_lower = y_center - y_center * f_lo
+#     yerr_upper = y_center * f_hi - y_center
+
+#     ax.errorbar(x_pos, y_center, yerr=[[yerr_lower], [yerr_upper]],
+#                 fmt='none', ecolor=color, elinewidth=1.5, capsize=5)
+#     ax.text(x_pos * 1.4, y_center, label, va='center', fontsize=10, color=color)
+
+def add_ci_bracket(ax, f_lo, f_hi, x_frac=0.08, y_frac=0.85,
+                label='95% CI', color='k', log_y=True):
+
+    
     xlim = ax.get_xlim()
     ylim = ax.get_ylim()
-    x_pos = xlim[0] * (xlim[1] / xlim[0]) ** x_frac
-    y_center = ylim[0] * (ylim[1] / ylim[0]) ** y_frac
+
+    x_pos = xlim[0] * (xlim[1] / xlim[0]) ** x_frac   # x always log
+
+    if log_y:
+        y_center = ylim[0] * (ylim[1] / ylim[0]) ** y_frac
+    else:
+        y_center = ylim[0] + y_frac * (ylim[1] - ylim[0])   # linear
 
     yerr_lower = y_center - y_center * f_lo
     yerr_upper = y_center * f_hi - y_center
 
     ax.errorbar(x_pos, y_center, yerr=[[yerr_lower], [yerr_upper]],
                 fmt='none', ecolor=color, elinewidth=1.5, capsize=5)
-    ax.text(x_pos * 1.4, y_center, label, va='center', fontsize=10, color=color)
+    ax.text(x_pos * 1.4, y_center, label, va='center',
+            fontsize=10, color=color)
