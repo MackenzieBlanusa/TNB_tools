@@ -41,6 +41,7 @@ import xarray as xr
 import matplotlib.pyplot as plt
 import matplotlib.ticker as mticker
 from scipy.interpolate import RegularGridInterpolator
+from pyproj import Transformer
 
 
 # ── INTERNAL HELPERS ──────────────────────────────────────────────────────────
@@ -233,6 +234,135 @@ def extract_cross_section(ds_bathy, mooring_lon, mooring_lat,
 
     return dist_km, depth_raw, transect_lons, transect_lats, \
            left_label, right_label
+
+
+def extract_cross_section_bedmachine(ds_bathy,
+                                      mooring_lon, mooring_lat,
+                                      trough_theta_deg,
+                                      transect_half_width_deg=0.5,
+                                      stop_depth_contour=None,
+                                      n_points=1000,
+                                      include_ice_cavity=True):
+    """
+    Extract a bathymetric cross-section from BedMachine Antarctica,
+    perpendicular to the trough axis through the mooring location.
+
+    Identical interface to extract_cross_section() but handles:
+      - Polar stereographic input grid (EPSG:3031)
+      - Sub-ice cavity bathymetry (mask == 3, floating ice)
+      - Grounded ice / land masking (mask == 1 or 2 → NaN)
+
+    Parameters
+    ----------
+    ds_bathy           : xarray Dataset, BedMachine TNB subset
+    mooring_lon/lat    : float, mooring position (decimal degrees)
+    trough_theta_deg   : float, trough axis angle CCW from East
+    include_ice_cavity : bool, if True include sub-ice ocean beneath
+                         floating ice (mask==3). If False, treat as land.
+                         Default True — use the BedMachine advantage.
+    """
+    mooring_lon = float(mooring_lon)
+    mooring_lat = float(mooring_lat)
+
+    # ── Build transect in lon/lat then convert to PS ──────────────────────────
+    perp_theta = np.deg2rad(trough_theta_deg + 90.0)
+    lat_scale  = np.cos(np.deg2rad(mooring_lat))
+
+    t             = np.linspace(-transect_half_width_deg,
+                                 transect_half_width_deg, n_points)
+    transect_lons = mooring_lon + t * np.cos(perp_theta) / lat_scale
+    transect_lats = mooring_lat + t * np.sin(perp_theta)
+
+    # Convert transect to polar stereographic
+    transformer = Transformer.from_crs('EPSG:4326', 'EPSG:3031',
+                                        always_xy=True)
+    transect_x, transect_y = transformer.transform(transect_lons,
+                                                    transect_lats)
+
+    # ── Interpolate bed and mask onto transect ────────────────────────────────
+    x_grid = ds_bathy['x'].values.astype(float)
+    y_grid = ds_bathy['y'].values.astype(float)
+    bed    = ds_bathy['bed'].values.astype(float)
+    mask   = ds_bathy['mask'].values.astype(float)
+
+    # y may be descending — RegularGridInterpolator needs ascending
+    if y_grid[0] > y_grid[-1]:
+        y_grid = y_grid[::-1]
+        bed    = bed[::-1, :]
+        mask   = mask[::-1, :]
+
+    interp_bed = RegularGridInterpolator(
+        (y_grid, x_grid), bed,
+        method='linear', bounds_error=False, fill_value=np.nan
+    )
+    interp_mask = RegularGridInterpolator(
+        (y_grid, x_grid), mask,
+        method='nearest', bounds_error=False, fill_value=np.nan
+    )
+
+    pts        = np.column_stack([transect_y, transect_x])
+    bed_vals   = interp_bed(pts)
+    mask_vals  = interp_mask(pts)
+
+    # ── Convert bed elevation to depth (positive down) ────────────────────────
+    # bed is negative below sea level in BedMachine
+    depth_raw = -bed_vals   # positive down
+
+    # Mask land and grounded ice as NaN
+    is_ocean = (mask_vals == 0) | (mask_vals == 3 if include_ice_cavity
+                                    else False)
+    depth_raw = np.where(is_ocean, depth_raw, np.nan)
+
+    # ── Distance array (flat-Earth, km) ──────────────────────────────────────
+    dlons_km = 6371.0 * lat_scale * np.deg2rad(np.diff(transect_lons))
+    dlats_km = 6371.0 * np.deg2rad(np.diff(transect_lats))
+    dist_km  = np.concatenate([[0], np.cumsum(
+        np.sqrt(dlons_km**2 + dlats_km**2))])
+
+    # ── Trim to stop_depth_contour ────────────────────────────────────────────
+    if stop_depth_contour is not None:
+        mid       = len(depth_raw) // 2
+        left_idx  = 0
+        right_idx = len(depth_raw) - 1
+
+        for i in range(mid, -1, -1):
+            d = depth_raw[i]
+            if np.isnan(d) or d < stop_depth_contour:
+                left_idx = i; break
+
+        for i in range(mid, len(depth_raw)):
+            d = depth_raw[i]
+            if np.isnan(d) or d < stop_depth_contour:
+                right_idx = i; break
+
+        depth_raw     = depth_raw[left_idx:right_idx + 1]
+        mask_vals     = mask_vals[left_idx:right_idx + 1]
+        transect_lons = transect_lons[left_idx:right_idx + 1]
+        transect_lats = transect_lats[left_idx:right_idx + 1]
+        dist_km       = dist_km[left_idx:right_idx + 1]
+        dist_km       = dist_km - dist_km[0]
+
+        print(f"Trimmed to {stop_depth_contour}m contour: "
+              f"{dist_km[-1]:.1f} km wide")
+
+    # ── Cardinal labels ───────────────────────────────────────────────────────
+    from trough_cross_section import _cardinal_label
+    dlon        = transect_lons[-1] - transect_lons[0]
+    dlat        = transect_lats[-1] - transect_lats[0]
+    left_label  = _cardinal_label(-dlon, -dlat)
+    right_label = _cardinal_label( dlon,  dlat)
+
+    # Report ice cavity coverage
+    n_cavity = np.sum(mask_vals == 3)
+    if n_cavity > 0:
+        cavity_km = n_cavity * np.mean(np.diff(dist_km))
+        print(f"Sub-ice cavity spans {cavity_km:.1f} km of transect")
+        print(f"  → BedMachine resolves seafloor beneath Drygalski Ice Tongue")
+
+    print(f"Transect: {left_label} → {right_label}")
+
+    return (dist_km, depth_raw, transect_lons, transect_lats,
+            left_label, right_label, mask_vals)
 
 
 def find_mooring_position_on_transect(dist_km, transect_lons,
