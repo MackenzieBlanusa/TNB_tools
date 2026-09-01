@@ -89,6 +89,8 @@ def rotary_components(Suu, Svv, Cuv):
     Cuv : array_like (complex)
         Cross-spectral density of u and v, from auto_cross_spectra().
 
+    Note: Cuv as derived from Scipy's csd function has opposite sign as Gonella's Q_u1u2 variable, this is why sign is swapped below compared to reference. 
+
     Returns
     -------
     S_ccw : ndarray
@@ -100,8 +102,8 @@ def rotary_components(Suu, Svv, Cuv):
     Svv = np.asarray(Svv)
     Cuv = np.asarray(Cuv)
 
-    S_ccw = (Suu + Svv + 2 * np.imag(Cuv)) / 2
-    S_cw = (Suu + Svv - 2 * np.imag(Cuv)) / 2
+    S_cw = (Suu + Svv + 2 * np.imag(Cuv)) / 2
+    S_ccw = (Suu + Svv - 2 * np.imag(Cuv)) / 2
 
     return S_ccw, S_cw
 
