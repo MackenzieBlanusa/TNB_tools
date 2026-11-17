@@ -7,18 +7,15 @@ This repository is the shared code library. Analysis for each dissertation chapt
 ### Install (on each computer)
 
 ```bash
-conda activate <env>
 cd TNB_tools
-pip install -e ".[tests]"   # editable: code changes are picked up without reinstalling
-pytest                       # quick check that everything works
+mamba env create -f environment.yml     # or conda env create; installs everything incl. TNB_tools (editable)
+conda activate tnb
+python -m ipykernel install --user --name tnb --display-name "Python (tnb)"
+nbstripout --install                    # keep notebook outputs out of git (once per clone)
+pytest                                  # quick check that everything works
 ```
 
-To keep notebook outputs out of git, run this once per clone:
-
-```bash
-pip install nbstripout
-nbstripout --install
-```
+When `environment.yml` changes, run `mamba env update -f environment.yml --prune`. Install scientific packages with conda, not pip; pip tries to compile packages such as netCDF4 from source and fails.
 
 ### Modules
 

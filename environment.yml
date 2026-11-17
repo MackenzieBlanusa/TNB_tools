@@ -1,0 +1,61 @@
+# Conda environment for TNB_tools and the analysis notebooks.
+#
+# Create (run from the repository root, on each computer):
+#   mamba env create -f environment.yml        # or: conda env create -f environment.yml
+#   conda activate tnb
+#   python -m ipykernel install --user --name tnb --display-name "Python (tnb)"
+#   nbstripout --install
+#
+# Update after this file changes:
+#   mamba env update -f environment.yml --prune
+#
+# The list comes from the imports in TNB_tools/, MastersThesis/, examples/ and preprocess/ (Nov 2026).
+name: tnb
+channels:
+  - conda-forge
+dependencies:
+  - python=3.12
+
+  # core numerics and data
+  - numpy
+  - scipy
+  - pandas
+  - xarray
+  - netcdf4
+  - h5netcdf
+  - h5py
+  - dask            # xr.open_mfdataset
+  - zarr
+  - scikit-learn
+  - xrft
+  - tqdm
+
+  # oceanography
+  - gsw             # TEOS-10 seawater
+
+  # plotting and maps
+  - matplotlib
+  - cmocean
+  - colorcet
+  - cartopy
+  - windrose
+  - imageio
+  - ffmpeg          # animations
+
+  # geospatial
+  - pyproj
+  - shapely
+  - geopandas
+  - rasterio
+  - rioxarray
+
+  # notebooks, testing, git hygiene
+  - jupyterlab
+  - ipykernel
+  - pytest
+  - nbstripout
+
+  - pip
+  - pip:
+      - mixsea      # mixing parameterizations (CTD_N2 notebook)
+      - -e .        # TNB_tools itself, editable
