@@ -39,3 +39,8 @@ __pycache__/
 .DS_Store
 ~$*
 *.swp
+
+# Documents, maps and animations (outputs, not code)
+*.pdf
+*.docx
+DrygalskiBasin_Animations/
