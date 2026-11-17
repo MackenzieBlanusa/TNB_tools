@@ -69,8 +69,6 @@ def draft(raw_root: Path, rel_to: Path) -> pd.DataFrame:
             nan_frac = max((float(v.isnull().mean()) for v in ds.data_vars.values() if v.dtype.kind == "f"), default=0)
             if nan_frac > 0.3:
                 review.append(f"up to {nan_frac:.0%} NaN in a variable")
-            if "dir" in ds:
-                review.append("confirm dir is relative to true north (declination here is large)")
             n = ds.sizes["time"]
             include = "yes"
             if n < 100:
