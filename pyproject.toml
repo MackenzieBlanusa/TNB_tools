@@ -1,6 +1,6 @@
 [project]
 name = "TNB-tools"
-version = "0.0.1a1"
+version = "0.1.0"
 description = "A python package containing useful analysis tools for physical oceanographic research in Terra Nova Bay, Antarctica"
 keywords = ["antarctica","analysis","Terra Nova Bay"]
 readme = "README.md"
@@ -16,6 +16,12 @@ requires-python = ">=3.10"
 
 dependencies = [
     "numpy",
+    "pandas",
+    "xarray",
+    "netCDF4",
+    "scipy",
+    "matplotlib",
+    "pyproj",
 ]
 
 [project.urls]
@@ -39,3 +45,6 @@ requires = [
 
 [tool.setuptools.packages.find]
 include = ["TNB_tools*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
