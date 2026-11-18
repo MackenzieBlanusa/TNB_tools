@@ -41,21 +41,29 @@ There are three data levels, and they are never mixed:
 └── catalog.csv one row per L1 file, generated from file attributes
 ```
 
-The hand-edited processing decisions (deployment ID, position, unit fixes, declination, trims) are kept in `metadata/moorings_manifest.csv` in this repository, so they are versioned with the code. Each L1 file records the TNB_tools git commit that made it.
+The hand-edited processing decisions are versioned with the code in this repository:
 
-**L1 file names** look like `{MOORING}_{DEPLOYMENT}_{type}_{position}_{depth}m.nc`, for example `DITD_1702_ctd_bot_1225m.nc`. DEPLOYMENT is the YYMM of the deployment start, and type is `ctd`, `temp` or `vel`. Standard variable names and units are defined in `TNB_tools/moorings/conventions.py`. All velocities are in cm/s, and directions are "toward", clockwise from true north.
+* `metadata/moorings_manifest.csv` has one row per instrument: raw file, `raw_z` (which depth to take from a multi-instrument raw file), deployment, position, unit fixes, declination and trims.
+* `metadata/deployments.csv` has one row per deployment, with lat/lon.
+
+Each L1 file records the TNB_tools git commit that made it.
+
+**L1 file names** look like `{MOORING}_{DEPLOYMENT}_{type}_{position}_{depth}m.nc`, for example `DITD_1702_ctd_bot_1225m.nc`. DEPLOYMENT is the YYMM of the deployment start. Type is `ctd` (SBE37), `temp` (SBE56), `vel` (Aquadopp) or `rcm` (RCM9 rotor current meter, with u/v computed from speed and direction). Standard variable names and units are defined in `TNB_tools/moorings/conventions.py`. All velocities are in cm/s, and directions are "toward", clockwise from true north.
 
 **Set the data location once per computer**, using either an environment variable `TNB_MOORINGS=/path/to/data/moorings` or a one-line file `~/.config/tnbmoor/data_root.txt` containing that path.
 
-**First time:**
+**Adding raw data** (e.g. a new deployment):
 
 ```bash
-python -m TNB_tools.moorings.draft_manifest <data root>/raw metadata/moorings_manifest.csv
-# review the `review` column, fix units / declination / trims, then:
+# 1. copy the files, as downloaded, into <data root>/raw/<source>/<MOORING>/
+# 2. draft rows for them and review the `review` column
+python -m TNB_tools.moorings.draft_manifest <data root>/raw/<source> new_rows.csv
+# 3. paste the reviewed rows into metadata/moorings_manifest.csv (and add the deployment to deployments.csv)
+# 4. build L1 for the new rows and refresh the catalog
 python -m TNB_tools.moorings.build_l1
 ```
 
-**New data:** put the file in `raw/<MOORING>/`, add a row to the manifest, then run `python -m TNB_tools.moorings.build_l1`.
+Only rows without an L1 file are processed. After changing a convention, use `build_l1 --overwrite`.
 
 **In a notebook:**
 

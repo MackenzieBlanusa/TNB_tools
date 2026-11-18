@@ -27,7 +27,7 @@ def build_catalog(l1_root: Path, out: Path | None = None) -> pd.DataFrame:
         rows.append(row)
     cat = pd.DataFrame(rows, columns=COLUMNS + ["variables", "path"])
     for c in ("time_coverage_start", "time_coverage_end"):
-        cat[c] = pd.to_datetime(cat[c])
+        cat[c] = pd.to_datetime(cat[c], format="mixed")
     cat = cat.sort_values(["mooring", "instrument_type", "nominal_depth_m", "deployment"]).reset_index(drop=True)
     if out is not None:
         cat.to_csv(out, index=False)
@@ -36,4 +36,4 @@ def build_catalog(l1_root: Path, out: Path | None = None) -> pd.DataFrame:
 
 def load_catalog(path: Path) -> pd.DataFrame:
     return pd.read_csv(path, dtype={"deployment": str, "serial_number": str},
-                       parse_dates=["time_coverage_start", "time_coverage_end"])
+                       parse_dates=["time_coverage_start", "time_coverage_end"], date_format="mixed")

@@ -68,3 +68,29 @@ def test_all_nan_variables_dropped_and_duplicate_times_removed():
 def test_trim():
     ds = standardize(_raw({"speed": 5.0, "dir": 10.0}), dict(META, trim_start="2018-03-01 00:30"))
     assert ds.time.values[0] == np.datetime64("2018-03-01T00:30")
+
+
+def test_multi_instrument_raw_file_selects_one_depth_and_uses_deployment_position():
+    t = pd.date_range("2017-02-01", periods=6, freq="2min")
+    raw = xr.Dataset({"T": (("z", "DateTime"), np.array([[1.0] * 6, [2.0] * 6]))},
+                     coords={"z": [75, 667], "DateTime": t})
+    meta = dict(META, inst_type="ctd", raw_z="667", nominal_depth="667", lat="-75.36", lon="164.75")
+    ds = standardize(raw, meta)
+    assert "time" in ds.dims and "z" not in ds.variables
+    assert float(ds["temp"][0]) == 2.0
+    assert float(ds["lat"]) == pytest.approx(-75.36)
+
+
+def test_multi_instrument_raw_file_requires_raw_z():
+    t = pd.date_range("2017-02-01", periods=3, freq="2min")
+    raw = xr.Dataset({"T": (("z", "DateTime"), np.ones((2, 3)))}, coords={"z": [75, 667], "DateTime": t})
+    with pytest.raises(ValueError):
+        standardize(raw, dict(META, raw_z=""))
+
+
+def test_attach_deployments_adds_lat_lon():
+    from TNB_tools.moorings.preprocess import attach_deployments
+    man = pd.DataFrame([dict(mooring="DITN", deployment="1412", raw_path="x")])
+    dep = pd.DataFrame([dict(mooring="DITN", deployment="1412", lat="-75.36", lon="164.75")])
+    out = attach_deployments(man, dep)
+    assert out.loc[0, "lat"] == "-75.36"

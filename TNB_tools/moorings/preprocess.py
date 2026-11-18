@@ -2,7 +2,9 @@
 
 Everything that is specific to one file lives in one row of manifest.csv, not in code:
 
-    raw_path        path relative to the data root, e.g. raw/DITD/DITD_2017_ctd_bot.nc
+    raw_path        path relative to the data root, e.g. raw/DITx/DITN/121626.nc
+    raw_z           depth label to select when the raw file holds several instruments along a
+                    `z` dimension (e.g. 77); blank if the file holds one instrument
     mooring         DITD, DITN, DITS, TNBD, P2, P3 ...
     deployment      4-digit YYMM of deployment start, e.g. 1702
     inst_type       ctd | temp | vel
@@ -16,6 +18,8 @@ Everything that is specific to one file lives in one row of manifest.csv, not in
     declination     degrees east, only used when dir_reference = magnetic
     trim_start      optional ISO time; drop data before (deployment/settling)
     trim_end        optional ISO time; drop data after (recovery)
+
+Deployment-wide facts (lat, lon) come from metadata/deployments.csv, joined on mooring + deployment.
     include         yes | no
     notes           free text, copied into the file's history
 """
@@ -61,9 +65,20 @@ def standardize(ds: xr.Dataset, meta: dict) -> xr.Dataset:
     ds = ds.copy()
     history = []
 
-    # 1. names
+    # 1. one instrument out of a multi-depth raw file, then names
+    if "DateTime" in ds.variables:
+        ds = ds.rename({"DateTime": "time"})
+    if "z" in ds.dims:
+        rz = meta.get("raw_z")
+        if _blank(rz):
+            if ds.sizes["z"] != 1:
+                raise ValueError(f"{meta.get('raw_path')}: file has z={ds['z'].values.tolist()}, set raw_z")
+            ds = ds.isel(z=0)
+        else:
+            ds = ds.sel(z=int(float(rz)))
+        history.append(f"selected z={int(ds['z'])} from multi-instrument raw file")
     ds = ds.rename({k: v for k, v in C.RENAME.items() if k in ds.variables})
-    if "z" in ds.coords:
+    if "z" in ds.variables:
         ds = ds.drop_vars("z")  # replaced by nominal_depth from the manifest
 
     # 2. time: sorted, unique
@@ -120,8 +135,8 @@ def standardize(ds: xr.Dataset, meta: dict) -> xr.Dataset:
             warnings.warn(f"{meta.get('raw_path')}: '{k}' is not a standard variable; add it to conventions.py")
 
     # 8. coordinates and global attributes
-    lat = float(ds["lat"]) if "lat" in ds.variables else np.nan
-    lon = float(ds["lon"]) if "lon" in ds.variables else np.nan
+    lat = float(ds["lat"]) if "lat" in ds.variables else (np.nan if _blank(meta.get("lat")) else float(meta["lat"]))
+    lon = float(ds["lon"]) if "lon" in ds.variables else (np.nan if _blank(meta.get("lon")) else float(meta["lon"]))
     ds = ds.drop_vars([c for c in ("lat", "lon") if c in ds.variables])
     ds = ds.assign_coords(
         lat=((), lat, {"units": "degrees_north"}),
@@ -178,7 +193,22 @@ def process_row(meta: dict, data_root: Path, l1_root: Path, overwrite: bool = Fa
     return out
 
 
-def process_manifest(manifest: pd.DataFrame, data_root: Path, l1_root: Path, overwrite: bool = False) -> list[Path]:
+def attach_deployments(manifest: pd.DataFrame, deployments: pd.DataFrame | None) -> pd.DataFrame:
+    """Add lat/lon (and any other deployment-wide columns) to each manifest row."""
+    if deployments is None or deployments.empty:
+        return manifest
+    m = manifest.copy()
+    d = deployments.copy()
+    for df in (m, d):
+        df["mooring"] = df["mooring"].astype(str).str.upper()
+        df["deployment"] = df["deployment"].astype(str).str.zfill(4)
+    extra = [c for c in d.columns if c not in ("mooring", "deployment") and c not in m.columns]
+    return m.merge(d[["mooring", "deployment", *extra]], on=["mooring", "deployment"], how="left")
+
+
+def process_manifest(manifest: pd.DataFrame, data_root: Path, l1_root: Path, overwrite: bool = False,
+                     deployments: pd.DataFrame | None = None) -> list[Path]:
+    manifest = attach_deployments(manifest, deployments)
     done = []
     for _, row in manifest.iterrows():
         if str(row.get("include", "yes")).strip().lower() != "yes":

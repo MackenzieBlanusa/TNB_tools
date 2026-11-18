@@ -21,7 +21,10 @@ def main():
     args = ap.parse_args()
 
     manifest = pd.read_csv(paths.manifest_path(), dtype=str, keep_default_na=False)
-    process_manifest(manifest, paths.data_root(), paths.l1_dir(), overwrite=args.overwrite)
+    dep = paths.deployments_path()
+    deployments = pd.read_csv(dep, dtype=str, keep_default_na=False) if dep.exists() else None
+    process_manifest(manifest, paths.data_root(), paths.l1_dir(), overwrite=args.overwrite,
+                     deployments=deployments)
     cat = build_catalog(paths.l1_dir(), out=paths.catalog_path())
     print(f"catalog: {len(cat)} files -> {paths.catalog_path()}")
 

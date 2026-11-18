@@ -47,5 +47,10 @@ def manifest_path() -> Path:
     return REPO_ROOT / "metadata" / "moorings_manifest.csv"
 
 
+def deployments_path() -> Path:
+    """One row per mooring deployment: position and other deployment-wide facts."""
+    return REPO_ROOT / "metadata" / "deployments.csv"
+
+
 def catalog_path() -> Path:
     return data_root() / "catalog.csv"

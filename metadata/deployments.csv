@@ -1,0 +1,15 @@
+mooring,deployment,lat,lon,source
+DITD,1702,-75.2757,164.0673,Preprocess_DITx.ipynb
+DITD,1803,-75.2773,164.0710,Preprocess_DITx.ipynb
+DITD,1901,-75.2766,164.0700,Preprocess_DITx.ipynb
+DITD,2003,-75.2780,164.0603,Preprocess_DITx.ipynb
+DITD,2211,-75.2778,164.0607,Preprocess_DITx.ipynb
+DITD,2401,-75.2777,164.0602,Preprocess_DITx.ipynb
+DITN,1412,-75.3602,164.7495,Preprocess_DITx.ipynb
+DITN,1512,-75.3601,164.7486,Preprocess_DITx.ipynb
+DITN,1702,-75.3608,164.7465,Preprocess_DITx.ipynb
+DITN,1803,-75.3610,164.7430,Preprocess_DITx.ipynb
+DITN,1901,-75.3486,164.8159,Preprocess_DITx.ipynb
+DITN,2003,-75.3493,164.8170,Preprocess_DITx.ipynb
+DITS,1702,-75.4884,163.1744,Preprocess_DITx.ipynb
+DITS,1803,-75.4886,163.2042,Preprocess_DITx.ipynb

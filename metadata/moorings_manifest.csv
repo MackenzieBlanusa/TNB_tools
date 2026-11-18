@@ -1,1 +1,95 @@
-raw_path,mooring,deployment,inst_type,position,nominal_depth,model,serial,uv_units,w_units,dir_reference,declination,trim_start,trim_end,include,notes
+raw_path,raw_z,mooring,deployment,inst_type,position,nominal_depth,model,serial,uv_units,w_units,dir_reference,declination,trim_start,trim_end,include,notes,start,end,review
+raw/DITx/DITD/121614.nc,,DITD,1702,ctd,bot,1225,SBE37SM,,,,,,,,yes,,2017-02-08,2018-03-06,
+raw/DITx/DITD/121613.nc,,DITD,1702,vel,bot,1239,AQD,,cm/s,cm/s,true,,,,yes,,2017-02-08,2018-03-06,
+raw/DITx/DITD/121616.nc,1122,DITD,1803,ctd,top,1122,SBE37SM,,,,,,,,yes,,2018-03-10,2019-01-03,position assigned by depth order
+raw/DITx/DITD/121616.nc,1218,DITD,1803,ctd,bot,1218,SBE37SM,,,,,,,,yes,,2018-03-10,2019-01-03,position assigned by depth order; up to 67% NaN in a variable
+raw/DITx/DITD/121615.nc,1145,DITD,1803,vel,top,1145,AQD,,cm/s,cm/s,true,,,,yes,,2018-03-10,2019-01-03,position assigned by depth order
+raw/DITx/DITD/121615.nc,1244,DITD,1803,vel,bot,1244,AQD,,cm/s,cm/s,true,,,,yes,,2018-03-10,2019-01-03,position assigned by depth order; up to 65% NaN in a variable
+raw/DITx/DITD/121618.nc,,DITD,1901,ctd,bot,1219,SBE37SM,,,,,,,,yes,,2019-01-06,2020-03-17,
+raw/DITx/DITD/121617.nc,,DITD,1901,vel,bot,1221,AQD,,cm/s,cm/s,true,,,,yes,,2019-01-03,2020-03-12,
+raw/DITx/DITD/121620.nc,,DITD,2003,ctd,bot,1218,SBE37SM,,,,,,,,yes,,2020-03-18,2022-03-17,
+raw/DITx/DITD/121619.nc,,DITD,2003,vel,bot,1213,AQD,,cm/s,cm/s,true,,,,yes,,2020-03-18,2020-08-01,
+raw/DITx/DITD/121622.nc,,DITD,2211,ctd,bot,1205,SBE37SM,,,,,,,,yes,,2022-12-10,2024-01-19,
+raw/DITx/DITD/121621.nc,,DITD,2211,vel,bot,1204,AQD,,cm/s,cm/s,true,,,,yes,,2022-12-10,2024-01-20,
+raw/DITx/DITD/121624.nc,,DITD,2401,ctd,bot,1206,SBE37SM,,,,,,,,yes,,2024-01-21,2024-12-08,
+raw/DITx/DITD/121623.nc,,DITD,2401,vel,bot,1214,AQD,,m/s,m/s,true,,,,yes,,2024-01-21,2024-12-08,u/v look like m/s while speed is cm/s
+raw/DITx/DITN/121626.nc,77,DITN,1412,ctd,top,77,SBE37SM,,,,,,,,yes,,2014-12-12,2015-12-10,
+raw/DITx/DITN/121626.nc,278,DITN,1412,ctd,mid,278,SBE37SM,,,,,,,,yes,,2014-12-12,2015-12-10,
+raw/DITx/DITN/121626.nc,667,DITN,1412,ctd,bot,667,SBE37SM,,,,,,,,yes,,2014-12-12,2015-12-10,
+raw/DITx/DITN/121625.nc,75,DITN,1412,rcm,top,75,rcm9,,,,true,,,,yes,,2014-12-12,2015-11-06,up to 100% NaN in a variable
+raw/DITx/DITN/121625.nc,276,DITN,1412,rcm,mid,276,rcm9,,,,true,,,,yes,,2014-12-12,2015-11-06,
+raw/DITx/DITN/121625.nc,674,DITN,1412,rcm,bot,674,rcm9,,,,true,,,,yes,,2014-12-12,2015-11-06,up to 100% NaN in a variable
+raw/DITx/DITN/121627.nc,108,DITN,1412,temp,top,108,SBE56,,,,,,,,yes,,2014-12-12,2015-12-10,up to 37% NaN in a variable
+raw/DITx/DITN/121627.nc,148,DITN,1412,temp,mid1,148,SBE56,,,,,,,,yes,,2014-12-12,2015-12-10,
+raw/DITx/DITN/121627.nc,188,DITN,1412,temp,mid2,188,SBE56,,,,,,,,yes,,2014-12-12,2015-12-10,
+raw/DITx/DITN/121627.nc,228,DITN,1412,temp,bot,228,SBE56,,,,,,,,yes,,2014-12-12,2015-12-10,
+raw/DITx/DITN/121628.nc,73,DITN,1512,ctd,top,73,SBE37SM,,,,,,,,yes,,2015-12-14,2017-02-08,
+raw/DITx/DITN/121628.nc,275,DITN,1512,ctd,mid,275,SBE37SM,,,,,,,,yes,,2015-12-14,2017-02-08,up to 100% NaN in a variable
+raw/DITx/DITN/121628.nc,666,DITN,1512,ctd,bot,666,SBE37SM,,,,,,,,yes,,2015-12-14,2017-02-08,up to 100% NaN in a variable
+raw/DITx/DITN/121629.nc,71,DITN,1512,rcm,top,71,rcm9,,,,true,,,,yes,,2015-12-14,2017-02-08,
+raw/DITx/DITN/121629.nc,273,DITN,1512,rcm,mid,273,rcm9,,,,true,,,,yes,,2015-12-14,2017-02-08,up to 100% NaN in a variable
+raw/DITx/DITN/121629.nc,667,DITN,1512,rcm,bot,667,rcm9,,,,true,,,,yes,,2015-12-14,2017-02-08,up to 100% NaN in a variable
+raw/DITx/DITN/121630.nc,113,DITN,1512,temp,top,113,SBE56,,,,,,,,yes,,2015-12-14,2017-02-08,
+raw/DITx/DITN/121630.nc,153,DITN,1512,temp,mid1,153,SBE56,,,,,,,,yes,,2015-12-14,2017-02-08,
+raw/DITx/DITN/121630.nc,193,DITN,1512,temp,mid2,193,SBE56,,,,,,,,yes,,2015-12-14,2017-02-08,
+raw/DITx/DITN/121630.nc,233,DITN,1512,temp,bot,233,SBE56,,,,,,,,yes,,2015-12-14,2017-02-08,
+raw/DITx/DITN/121633.nc,75,DITN,1702,ctd,top,75,SBE37SM,,,,,,,,yes,,2017-02-09,2018-03-06,
+raw/DITx/DITN/121633.nc,275,DITN,1702,ctd,mid,275,SBE37SM,,,,,,,,yes,,2017-02-09,2018-03-06,
+raw/DITx/DITN/121633.nc,675,DITN,1702,ctd,bot,675,SBE37SM,,,,,,,,yes,,2017-02-09,2018-03-06,
+raw/DITx/DITN/121632.nc,75,DITN,1702,rcm,top,75,rcm9,,,,true,,,,yes,,2017-02-09,2018-03-06,up to 56% NaN in a variable
+raw/DITx/DITN/121632.nc,270,DITN,1702,rcm,mid,270,rcm9,,,,true,,,,yes,,2017-02-09,2018-03-06,
+raw/DITx/DITN/121632.nc,667,DITN,1702,rcm,bot,667,rcm9,,,,true,,,,yes,,2017-02-09,2018-03-06,
+raw/DITx/DITN/121634.nc,197,DITN,1702,temp,top,197,SBE56,,,,,,,,yes,,2017-02-09,2018-03-06,
+raw/DITx/DITN/121634.nc,330,DITN,1702,temp,mid,330,SBE56,,,,,,,,yes,,2017-02-09,2018-03-06,
+raw/DITx/DITN/121634.nc,360,DITN,1702,temp,bot,360,SBE56,,,,,,,,yes,,2017-02-09,2018-03-06,
+raw/DITx/DITN/121631.nc,76,DITN,1702,vel,top,76,AQD,,cm/s,cm/s,true,,,,yes,,2017-02-09,2018-03-06,
+raw/DITx/DITN/121631.nc,271,DITN,1702,vel,mid,271,AQD,,cm/s,cm/s,true,,,,yes,,2017-02-09,2018-03-06,
+raw/DITx/DITN/121631.nc,694,DITN,1702,vel,bot,694,AQD,,cm/s,cm/s,true,,,,yes,,2017-02-09,2018-03-06,
+raw/DITx/DITN/121635.nc,73,DITN,1803,ctd,top,73,SBE37SM,,,,,,,,yes,,2018-03-12,2019-01-04,'depth' variable (72 m) inconsistent with pressure (105 dbar)
+raw/DITx/DITN/121635.nc,274,DITN,1803,ctd,mid,274,SBE37SM,,,,,,,,yes,,2018-03-12,2019-01-04,median pressure 398 dbar far from depth 274 m; 'depth' variable (271 m) inconsistent with pressure (398 dbar)
+raw/DITx/DITN/121635.nc,670,DITN,1803,ctd,bot,670,SBE37SM,,,,,,,,yes,,2018-03-12,2019-01-04,
+raw/DITx/DITN/121636.nc,114,DITN,1803,temp,top,114,SBE56,,,,,,,,yes,,2018-03-12,2019-01-04,
+raw/DITx/DITN/121636.nc,154,DITN,1803,temp,mid1,154,SBE56,,,,,,,,yes,,2018-03-12,2019-01-04,
+raw/DITx/DITN/121636.nc,194,DITN,1803,temp,mid2,194,SBE56,,,,,,,,yes,,2018-03-12,2019-01-04,
+raw/DITx/DITN/121636.nc,224,DITN,1803,temp,bot,224,SBE56,,,,,,,,yes,,2018-03-12,2019-01-04,
+raw/DITx/DITN/121638.nc,71,DITN,1803,vel,top,71,AQD,,cm/s,cm/s,true,,,,yes,,2018-03-12,2019-01-04,up to 50% NaN in a variable
+raw/DITx/DITN/121638.nc,263,DITN,1803,vel,mid,263,AQD,,cm/s,cm/s,true,,,,yes,,2018-03-12,2019-01-04,
+raw/DITx/DITN/121638.nc,666,DITN,1803,vel,bot,666,AQD,,cm/s,cm/s,true,,,,yes,,2018-03-12,2019-01-04,up to 50% NaN in a variable
+raw/DITx/DITN/121639.nc,71,DITN,1901,ctd,top,71,SBE37SM,,,,,,,,yes,,2019-01-07,2020-03-17,up to 80% NaN in a variable
+raw/DITx/DITN/121639.nc,271,DITN,1901,ctd,mid,271,SBE37SM,,,,,,,,yes,,2019-01-07,2020-03-17,
+raw/DITx/DITN/121640.nc,112,DITN,1901,temp,top,112,SBE56,,,,,,,,yes,,2019-01-07,2020-03-17,
+raw/DITx/DITN/121640.nc,152,DITN,1901,temp,mid1,152,SBE56,,,,,,,,yes,,2019-01-07,2020-03-17,
+raw/DITx/DITN/121640.nc,192,DITN,1901,temp,mid2,192,SBE56,,,,,,,,yes,,2019-01-07,2020-03-17,
+raw/DITx/DITN/121640.nc,232,DITN,1901,temp,bot,232,SBE56,,,,,,,,yes,,2019-01-07,2020-03-17,
+raw/DITx/DITN/121637.nc,67,DITN,1901,vel,top,67,AQD,,cm/s,m/s,true,,,,yes,,2019-01-04,2020-03-14,up to 70% NaN in a variable
+raw/DITx/DITN/121637.nc,255,DITN,1901,vel,mid,255,AQD,,cm/s,m/s,true,,,,yes,,2019-01-04,2020-03-14,up to 65% NaN in a variable
+raw/DITx/DITN/121637.nc,649,DITN,1901,vel,bot,649,AQD,,cm/s,m/s,true,,,,yes,,2019-01-04,2020-03-14,up to 68% NaN in a variable
+raw/DITx/DITN/121642.nc,269,DITN,2003,ctd,mid,269,SBE37SM,,,,,,,,yes,,2020-03-18,2022-03-15,up to 100% NaN in a variable
+raw/DITx/DITN/121642.nc,667,DITN,2003,ctd,bot,667,SBE37SM,,,,,,,,yes,,2020-03-18,2022-03-15,
+raw/DITx/DITN/121643.nc,95,DITN,2003,temp,top,95,SBE56,,,,,,,,yes,,2020-03-18,2022-03-15,
+raw/DITx/DITN/121643.nc,135,DITN,2003,temp,mid1,135,SBE56,,,,,,,,yes,,2020-03-18,2022-03-15,
+raw/DITx/DITN/121643.nc,175,DITN,2003,temp,mid2,175,SBE56,,,,,,,,yes,,2020-03-18,2022-03-15,
+raw/DITx/DITN/121643.nc,215,DITN,2003,temp,bot,215,SBE56,,,,,,,,yes,,2020-03-18,2022-03-15,
+raw/DITx/DITN/121641.nc,54,DITN,2003,vel,top,54,AQD,,cm/s,cm/s,true,,,,yes,,2020-03-18,2020-08-24,
+raw/DITx/DITN/121641.nc,252,DITN,2003,vel,mid,252,AQD,,cm/s,cm/s,true,,,,yes,,2020-03-18,2020-08-24,
+raw/DITx/DITN/121641.nc,671,DITN,2003,vel,bot,671,AQD,,cm/s,cm/s,true,,,,yes,,2020-03-18,2020-08-24,
+raw/DITx/DITS/121645.nc,192,DITS,1702,ctd,top,192,SBE37SM,,,,,,,,yes,,2017-02-12,2018-03-08,
+raw/DITx/DITS/121645.nc,383,DITS,1702,ctd,mid,383,SBE37SM,,,,,,,,yes,,2017-02-12,2018-03-08,up to 100% NaN in a variable
+raw/DITx/DITS/121645.nc,1088,DITS,1702,ctd,bot,1088,SBE37SM,,,,,,,,yes,,2017-02-12,2018-03-08,up to 50% NaN in a variable
+raw/DITx/DITS/121644.nc,191,DITS,1702,rcm,top,191,rcm9,,,,true,,,,yes,,2017-02-12,2018-03-08,
+raw/DITx/DITS/121644.nc,384,DITS,1702,rcm,mid,384,rcm9,,,,true,,,,yes,,2017-02-12,2018-03-08,
+raw/DITx/DITS/121644.nc,1087,DITS,1702,rcm,bot,1087,rcm9,,,,true,,,,yes,,2017-02-12,2018-03-08,
+raw/DITx/DITS/121646.nc,233,DITS,1702,temp,top,233,SBE56,,,,,,,,yes,,2017-02-12,2017-11-10,
+raw/DITx/DITS/121646.nc,273,DITS,1702,temp,mid1,273,SBE56,,,,,,,,yes,,2017-02-12,2017-11-10,
+raw/DITx/DITS/121646.nc,313,DITS,1702,temp,mid2,313,SBE56,,,,,,,,yes,,2017-02-12,2017-11-10,
+raw/DITx/DITS/121646.nc,353,DITS,1702,temp,bot,353,SBE56,,,,,,,,yes,,2017-02-12,2017-11-10,
+raw/DITx/DITS/121648.nc,63,DITS,1803,ctd,top,63,SBE37SM,,,,,,,,yes,,2018-03-12,2020-01-29,
+raw/DITx/DITS/121648.nc,208,DITS,1803,ctd,mid,208,SBE37SM,,,,,,,,yes,,2018-03-12,2020-01-29,median pressure 357 dbar far from depth 208 m; 'depth' variable (243 m) inconsistent with pressure (357 dbar)
+raw/DITx/DITS/121648.nc,1458,DITS,1803,ctd,bot,1458,SBE37SM,,,,,,,,yes,,2018-03-12,2020-01-29,'depth' variable (1045 m) inconsistent with pressure (1535 dbar)
+raw/DITx/DITS/121649.nc,88,DITS,1803,temp,top,88,SBE56,,,,,,,,yes,,2018-03-09,2020-01-28,
+raw/DITx/DITS/121649.nc,128,DITS,1803,temp,mid1,128,SBE56,,,,,,,,yes,,2018-03-09,2020-01-28,
+raw/DITx/DITS/121649.nc,168,DITS,1803,temp,mid2,168,SBE56,,,,,,,,yes,,2018-03-09,2020-01-28,
+raw/DITx/DITS/121649.nc,208,DITS,1803,temp,bot,208,SBE56,,,,,,,,yes,,2018-03-09,2020-01-28,
+raw/DITx/DITS/121647.nc,47,DITS,1803,vel,top,47,AQD,,cm/s,cm/s,true,,,,yes,,2018-03-09,2020-01-28,
+raw/DITx/DITS/121647.nc,220,DITS,1803,vel,mid,220,AQD,,cm/s,cm/s,true,,,,yes,,2018-03-09,2020-01-28,
+raw/DITx/DITS/121647.nc,1027,DITS,1803,vel,bot,1027,AQD,,cm/s,cm/s,true,,,,yes,,2018-03-09,2020-01-28,

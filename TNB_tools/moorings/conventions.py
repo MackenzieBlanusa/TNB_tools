@@ -21,6 +21,7 @@ RENAME = {
     "A2": "amp2",
     "A3": "amp3",
     "volt": "battery",
+    "bv": "battery",
     "sound speed": "sound_speed",
     "sound speed used": "sound_speed_used",
     "analog 1": "analog1",
@@ -68,12 +69,16 @@ VELOCITY_VARS = ("u", "v", "w")
 INSTRUMENT_TYPES = {
     "ctd": "Conductivity-temperature-pressure recorder (e.g. SBE37)",
     "temp": "Temperature logger (e.g. SBE56)",
-    "vel": "Point current meter with u, v (e.g. Nortek Aquadopp, RCM after conversion)",
+    "vel": "Acoustic point current meter (Nortek Aquadopp)",
+    "rcm": "Rotor current meter (Aanderaa RCM9); u, v computed from speed and direction",
 }
 
+# Instrument model (as in the raw files' description attribute) -> L1 type code.
+MODEL_TYPE = {"SBE37SM": "ctd", "SBE56": "temp", "AQD": "vel", "RCM9": "rcm"}
+
 # Legacy file-name type codes -> L1 type code.
-# 'speed' files (RCM / tilt meters, speed + dir only) become 'vel' once u, v are computed.
-LEGACY_TYPE = {"ctd": "ctd", "temp": "temp", "vel": "vel", "speed": "vel"}
+# Legacy 'speed' files are rotor current meters (speed + dir only).
+LEGACY_TYPE = {"ctd": "ctd", "temp": "temp", "vel": "vel", "speed": "rcm"}
 
 # Default packing for L1 files: float32 + compression roughly halves to quarters file size.
 ENCODING_FLOAT = {"dtype": "float32", "zlib": True, "complevel": 4, "_FillValue": float("nan")}
